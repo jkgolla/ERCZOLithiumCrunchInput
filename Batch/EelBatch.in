@@ -1,0 +1,190 @@
+TITLE
+Batch reactor model for Rivendell saturated zone
+END
+
+
+RUNTIME
+time_units         years
+timestep_max       10
+timestep_init      1.E-09
+time_tolerance     0.01
+hindmarsh          true
+correction_max     2.0
+debye-huckel       true
+database_sweep     false
+speciate_only      false
+graphics           tecplot
+solver             gmres
+preconditioner     ilu
+precondition_level 1
+master_variable    H+
+database           Database.dbs
+gimrt              true
+screen_output      50
+Fix_saturation     1.0
+END
+
+OUTPUT
+time_units           years
+spatial_profile      1.0 2.0 8.0
+time_series          top.out          1  1  1
+time_series          bottom.out       10  1  1
+time_series_print    Na+ K+ Al+++ Mg++ Li6+ Li7+ SiO2(aq) Ca++  Fe++ SO4-- pH CO2(aq) O2(aq)
+time_series_interval 1
+END
+
+INITIAL_CONDITIONS
+argillite_bottom 1-10 1-1 1-1
+END
+
+Condition argillite_bottom
+!! Initial conditions taken from node 66 of 1-D reactive transport model results
+units            mol/kg
+temperature      25.0
+pH               7.59591
+Li6+             6.485763e-08
+Li7+             8.017604e-07
+Na+              8.884866e-05
+K+               1.036089e-04
+Fe++             4.103390e-04
+Fe+++            1.932419e-08
+O2(aq)           O2(g) 1.592885e-05
+CO2(aq)          CO2(g) 2.302099e-03
+HS-              1.000000E-14
+SO4--            1.718744e-06
+Mg++             9.928524e-05
+Al+++            1.430854e-16
+Ca++             3.751491e-04
+SiO2(aq)         4.789176e-04
+Cl-              1.0E-14
+Tracer           1.412277e-10
+
+!! Mineral  Volume Fraction   specific_surface_area  m2/g
+!! specific_surface_area is calculated using the volume fraction times the BET surface area
+Quartz                                0.208372 specific_surface_area 0.0380
+Albite                                0.186477 specific_surface_area 0.000340
+Dolomite-dis                          0.017834 specific_surface_area 0.0000033
+Chamosite-7A                          0.126771 specific_surface_area 0.0231
+!Kaolinite_Li6                        0.002243868727217 specific_surface_area 0.00546
+!Kaolinite_Li7                        0.027651131272783 specific_surface_area 0.00546
+!Kaolinite                            0.029895 specific_surface_area 0.00546
+Kaolinite_LiIso                       0.029895 specific_surface_area 0.00546
+!Smectite-high-Fe-Mg_LiIso            0.096672 specific_surface_area 0.0175
+Smectite-high-Fe-Mg_Li6               0.007256038722111 specific_surface_area 0.0175
+Smectite-high-Fe-Mg_Li7               0.089415961277889 specific_surface_area 0.0175
+Microcline                            0.008782 specific_surface_area 0.00116
+Muscovite                             0.063525 specific_surface_area 0.0116
+Fe(OH)3                               0.0 specific_surface_area 0.072
+!Illite_LiIso                         0.060886 specific_surface_area 0.0111
+Illite_Li6                            0.004570001382349 specific_surface_area 0.0111
+Illite_Li7                            0.056315998617651 specific_surface_area 0.0111
+Pyrite                                0.000787 specific_surface_area 0.0000143
+!POMC                                  0.00002 specific_surface_area 0.0013
+Gibbsite                              0.0000 specific_surface_area 0.00
+Calcite                               0.0000 specific_surface_area 0.00
+XEel-   -cec     .00015801
+SolidDensity     CalculateFromMinerals
+Tracer            0.001
+END
+
+MINERALS 
+!! Mineral rates acquired from Palandri and Kharaka 2014
+Quartz                                -label default    -rate  -13.40
+Albite                                -label default    -rate  -11.82
+Albite                                -label pH         -rate  -4.2
+Dolomite-dis                          -label default    -rate  -7.53
+Microcline                            -label default    -rate  -12.41
+Microcline                            -label pH         -rate  -4.2
+Pyrite                                -label default    -rate  -4.55
+Muscovite                             -label default    -rate  -13.0
+Chamosite-7A                          -label default    -rate  -12.52
+!Illite_LiIso                         -label default    -rate  -14.8
+Illite_Li7                            -label default    -rate  -11.4
+Illite_Li6                            -label default    -rate  -11.3894498
+!Kaolinite_Li6                        -label default    -rate  -13.1725535
+!Kaolinite_Li7                        -label default    -rate  -13.18
+!Kaolinite                            -label default    -rate  -13.18
+Kaolinite_LiIso                       -label default    -rate  -13.18
+!Smectite-high-Fe-Mg_LiIso            -label default    -rate  -12.78
+Smectite-high-Fe-Mg_Li7               -label default    -rate  -12.78
+Smectite-high-Fe-Mg_Li6               -label default    -rate  -12.7727302
+!Smectite-high-Fe-Mg_LiIso_depleted   -label default    -rate  -12.78
+!POMC                                 -label default    -rate  -10
+Fe(OH)3                               -label default    -rate  -14
+Gibbsite                              -label default    -rate  -11.5
+Calcite                               -label default    -rate  -5.81
+END
+
+ISOTOPES
+primary    Li6+                       Li7+                        0.08110300081103
+mineral    Illite_Li6                 Illite_Li7                  none
+mineral    Smectite-high-Fe-Mg_Li6    Smectite-high-Fe-Mg_Li7     none
+END
+
+PRIMARY_SPECIES
+H+
+Li7+
+Li6+
+Na+
+Ca++
+K+
+Al+++
+SiO2(aq)
+CO2(aq)
+O2(aq)
+Fe++
+Fe+++
+HS-
+SO4--
+Mg++
+Cl-
+!CH2O
+Tracer
+END
+
+SECONDARY_SPECIES
+HCO3-
+Fe(OH)2(aq)
+Fe(OH)2+
+Fe(OH)3(aq)
+Fe(OH)3-
+Fe(OH)4-
+Fe(OH)4--
+Fe(SO4)2-
+Fe2(OH)2++++
+Fe3(OH)4(5+)
+FeOH+
+FeOH++
+FeSO4(aq)
+FeSO4+
+H2S(aq)
+H2SO4(aq)
+HSO4-
+NaCl(aq)
+NaOH(aq)
+NaSO4-
+OH-
+S--
+FeS(aq)
+CO3--
+FeCO3(aq)
+FeCO3+
+FeHCO3+
+NaCO3-
+NaHCO3(aq)
+END
+
+GASES
+CO2(g)
+O2(g)
+END
+
+ION_EXCHANGE
+exchange   XEel-
+convention Gaines-Thomas
+END
+
+POROSITY
+mineral_update    true
+porosity_update   true
+END
